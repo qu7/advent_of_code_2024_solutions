@@ -23,37 +23,98 @@ public class Dec_3_Challenge {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
-        List<String> row = new ArrayList<String>();
 
         return rows;
     }
 
     public void InputParse(){
-        String result = ReadFiles().get(0).replace("\n", "").replace("\r", "");
-        System.out.println(result);
-        List<String> listOfEquations = new ArrayList<>();
-        String setOne = "";
-        String setTwo = "";
-        int resultLength = result.length()-4;
-        for (int i = 0; i < resultLength; i++){
-            String currentChar = result.substring(i, i+4).toLowerCase();
-            if (currentChar.contains("mul(")){
+        List<String> rows = ReadFiles();
+        List<String> allEquations = new ArrayList<>();
+        for (int i = 0; i < rows.size(); i++){
+            String multiplicationString = "";
+            String result = ReadFiles().get(i).replace("\n", "").replace("\r", "") + " ";
+            for (int j = 0; j < result.length(); j++){
                 try {
-                    for (int j = 1; j < 20; j++) {
-                        if (!result.substring(i + j).contentEquals(",")) {
-                            setOne = setOne + result.substring(i + j);
-                            System.out.println(setOne);
-                        } else {
-                            setOne = "";
+                    if (result.substring(j, j + 4).equalsIgnoreCase("mul(")) {
+                        // check all chars until comma ")"
+                        for (int k = j + 4; k < result.length(); k++){
+                            if (!result.substring(k, k+1).equalsIgnoreCase(")")){
+                                multiplicationString = multiplicationString + "" + result.charAt(k);
+                            } else {
+                                break;
+                            }
                         }
+                        allEquations.add(multiplicationString);
+//                        System.out.println(multiplicationString);
+                        multiplicationString = "";
+
                     }
-                } catch (Exception outOfBounds){
+                } catch (Exception OutOfBoundsException){
 
                 }
             }
-            currentChar = "";
-        }
 
+        }
+        System.out.println(allEquations);
+
+        int total = 0;
+        int firstNumberInt = 0;
+        int secondNumberInt = 0;
+        for (int i = 0; i < allEquations.size(); i++) {
+            String firstNumber = "";
+            String secondNumber = "";
+            for (int j = 0; j < allEquations.get(i).length(); j++) {
+                if (!allEquations.get(i).substring(j, j + 1).equalsIgnoreCase(",")) {
+                    firstNumber = firstNumber + allEquations.get(i).substring(j, j + 1);
+                } else {
+                    // firstNumber is completed, now construct secondNumber
+
+                    for (int k = j+1; k < allEquations.get(i).length(); k++) {
+                        if (!allEquations.get(i).substring(k, k + 1).equalsIgnoreCase(")") &&
+                        (!allEquations.get(i).substring(k, k + 1).equalsIgnoreCase("(")) &&
+                        (!allEquations.get(i).substring(k, k + 1).equalsIgnoreCase("m"))) {
+                            secondNumber = secondNumber + allEquations.get(i).substring(k, k + 1);
+//                            System.out.println("strings: " + firstNumber + " x " + secondNumber + " = " + (firstNumberInt*secondNumberInt));
+
+                        } else {
+                            if (!allEquations.get(i).substring(k, k + 1).contains(" ")){
+                                break;
+                            } else {
+                                System.out.println("Clearing " + firstNumber + " and " + secondNumber);
+                                firstNumber = "";
+                                secondNumber = "";
+                                break;
+                            }
+
+                        }
+                    }
+                }
+
+            }
+            // multiply and add to total
+            try {
+
+                firstNumber = firstNumber.replace(secondNumber, "");
+                firstNumberInt = Integer.parseInt(firstNumber);
+                secondNumberInt = Integer.parseInt(secondNumber);
+                total = total + (firstNumberInt * secondNumberInt);
+                System.out.println("int: " + firstNumber + " x " + secondNumber + " = " + (firstNumberInt*secondNumberInt));
+            } catch (Exception NotANumber){
+                System.out.println(firstNumber + " and " + secondNumber + "  cannot be multiplied");
+            }
+
+
+
+        }
+        System.out.println("Total: " + total);
+
+//        427 * 266 = 113582
+//        287 * 390 = 111930
+//        398 * 319 = 126962
+//        613 * 600 = 367800
+//        5 * 441   = 2205
+//        122 * 41  = 5002
+//                    727481
     }
 
 }

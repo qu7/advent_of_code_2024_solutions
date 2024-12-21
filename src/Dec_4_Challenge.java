@@ -34,24 +34,24 @@ public class Dec_4_Challenge {
         // check forward and backwards
         String xmas = "XMAS";
         String samx = "SAMX";
-//        for (int i = 0; i < wordJumble.size(); i++) {
-//            for (int j = 0; j < wordJumble.get(i).length(); j++){
-//                try {
-//                    if (wordJumble.get(i).substring(j, j + 4).contains(xmas) || wordJumble.get(i).substring(j, j + 4).contains(samx)) {
-//                        counter++;
-//                    }
-//                } catch (Exception outOfBounds){
-//
-//                }
-//            }
-//        }
-//        System.out.println("counter: " + counter);
-//
-//
-//        // refactor input columns to rows
-//        List<String> wordJumbleRefactored = ReadFiles();
-//        String currentRow = "";
-//
+        for (int i = 0; i < wordJumble.size(); i++) {
+            for (int j = 0; j < wordJumble.get(i).length(); j++){
+                try {
+                    if (wordJumble.get(i).substring(j, j + 4).contains(xmas) || wordJumble.get(i).substring(j, j + 4).contains(samx)) {
+                        counter++;
+                    }
+                } catch (Exception outOfBounds){
+
+                }
+            }
+        }
+        System.out.println("counter: " + counter);
+
+
+        // refactor input columns to rows
+        List<String> wordJumbleRefactored = ReadFiles();
+        String currentRow = "";
+
 //        for (int i = 0; i < wordJumble.size(); i++){
 //            for (int j = 0; j < wordJumble.get(i).length(); j++) {
 //                currentRow = currentRow + "" + wordJumble.get(j).substring(i, i+1);
@@ -76,76 +76,65 @@ public class Dec_4_Challenge {
 
         for (int i = 0; i < wordJumble.size(); i++) {
             for (int j = 0; j < wordJumble.get(i).length(); j++){
-                try {
-                    if (wordJumble.get(i).substring(j, j).contains("X")
-                            && wordJumble.get(i).substring(j - 1, j-1).contains("M")
-                            && wordJumble.get(i).substring(j - 2, j - 2).contains("A")
-                            && wordJumble.get(i).substring(j - 3, j - 3).contains("S"))
-                    {
-                        counter++;
-                    }
-                } catch (Exception outOfBoundsException){
-
-                }
-                try {
-                    if (wordJumble.get(i).substring(j, j).contains("X")
-                            && wordJumble.get(i).substring(j +1 , j+1).contains("M")
-                            && wordJumble.get(i).substring(j +2, j+2).contains("A")
-                            && wordJumble.get(i).substring(j +3, j+3).contains("S"))
-                    {
-                        counter++;
-                    }
-                } catch (Exception outOfBoundsException){
-
-                }
-
-
                 // check diagonals
-                try {
-                    if (wordJumble.get(i).substring(j, j).contains("X")
-                            && wordJumble.get(i - 1).substring(j - 1, j-1).contains("M")
-                            && wordJumble.get(i - 2).substring(j - 2, j - 2).contains("A")
-                            && wordJumble.get(i - 3).substring(j - 3, j - 3).contains("S"))
-                        {
+                if (wordJumble.get(i).substring(j, j+1).equalsIgnoreCase("X")) {
+                    try {
+                        // northwest
+                            if (wordJumble.get(i - 1).substring(j - 1, j).equalsIgnoreCase("M")
+                            && wordJumble.get(i - 2).substring(j - 2, j-1).equalsIgnoreCase("A")
+                            && wordJumble.get(i - 3).substring(j - 3, j - 2).equalsIgnoreCase("S")){
+                                counter++;
+                            }
+                    } catch (Exception outOfBoundsException){
+
+                    }
+                    try {
+                        if (wordJumble.get(i - 1).substring(j + 1, j+2).equalsIgnoreCase("M")
+                                && wordJumble.get(i - 2).substring(j + 2, j+3).equalsIgnoreCase("A")
+                                && wordJumble.get(i - 3).substring(j +3, j+4).equalsIgnoreCase("S")){
                             counter++;
                         }
-                } catch (Exception outOfBoundsException){
+                    } catch (Exception outOfBoundsException){
 
-                }
-                try {
-                    if (wordJumble.get(i).substring(j, j).contains("X")
-                            && wordJumble.get(i - 1).substring(j + 1, j + 1).contains("M")
-                            && wordJumble.get(i - 2).substring(j + 2, j + 2).contains("A")
-                            && wordJumble.get(i - 3).substring(j + 3, j + 3).contains("S"))
-                    {
-                        counter++;
                     }
-                } catch (Exception outOfBoundsException){
+                    try {
+                        if (wordJumble.get(i + 1).substring(j - 1, j).equalsIgnoreCase("M")
+                                && wordJumble.get(i + 2).substring(j - 2, j - 1).equalsIgnoreCase("A")
+                                && wordJumble.get(i + 3).substring(j - 3, j - 2).equalsIgnoreCase("S")){
+                            counter++;
+                        }
+                    } catch (Exception outOfBoundsException){
 
-                }
-                try {
-                    if (wordJumble.get(i).substring(j, j).contains("X")
-                            && wordJumble.get(i + 1).substring(j - 1, j-1).contains("M")
-                            && wordJumble.get(i + 2).substring(j - 2, j - 2).contains("A")
-                            && wordJumble.get(i + 3).substring(j - 3, j - 3).contains("S"))
-                    {
-                        counter++;
                     }
-                } catch (Exception outOfBoundsException){
+                    try {
+                        if (wordJumble.get(i + 1).substring(j+ 1, j + 2).equalsIgnoreCase( "M")
+                                && wordJumble.get(i + 2).substring(j + 2, j + 3).equalsIgnoreCase("A")
+                                && wordJumble.get(i + 3).substring(j + 3, j + 4).equalsIgnoreCase("S")){
+                            counter++;
+                        }
+                    } catch (Exception outOfBoundsException){
 
-                }
-                try {
-                    if (wordJumble.get(i).substring(j, j).contains("X")
-                            && wordJumble.get(i + 1).substring(j + 1, j + 1).contains("M")
-                            && wordJumble.get(i + 2).substring(j + 2, j + 2).contains("A")
-                            && wordJumble.get(i + 3).substring(j + 3, j + 3).contains("S"))
-                    {
-                        counter++;
                     }
-                } catch (Exception outOfBoundsException){
+                    try {
+                        if (wordJumble.get(i + 1).substring(j, j + 1).equalsIgnoreCase( "M")
+                                && wordJumble.get(i + 2).substring(j, j + 1).equalsIgnoreCase("A")
+                                && wordJumble.get(i + 3).substring(j, j + 1).equalsIgnoreCase("S")){
+                            counter++;
+                        }
+                    } catch (Exception outOfBoundsException){
+
+                    }
+                    try {
+                        if (wordJumble.get(i - 1).substring(j, j + 1).equalsIgnoreCase( "M")
+                                && wordJumble.get(i - 2).substring(j, j + 1).equalsIgnoreCase("A")
+                                && wordJumble.get(i - 3).substring(j, j + 1).equalsIgnoreCase("S")){
+                            counter++;
+                        }
+                    } catch (Exception outOfBoundsException){
+
+                    }
 
                 }
-
             }
         }
 
